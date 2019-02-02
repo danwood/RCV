@@ -74,16 +74,47 @@ class MasterViewController: UITableViewController {
 		}
 	}
 	
-	override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String {
+	override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+		//Need to create a label with the text we want in order to figure out height
+		let label: UILabel = createFooterLabel(section)
+		let size = label.sizeThatFits(CGSize(width: view!.bounds.width, height: CGFloat.greatestFiniteMagnitude))
+		let padding: CGFloat = 20.0
+		return size.height + padding
+	}
 	
+	override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+		let footerView = UITableViewHeaderFooterView()
+		let label = createFooterLabel(section)
+		label.autoresizingMask = [.flexibleHeight]
+		footerView.addSubview(label)
+		return footerView
+	}
+	
+	func createFooterLabel(_ section: Int)->UILabel {
+		let widthPadding: CGFloat = 20.0
+		let label: UILabel = UILabel(frame: CGRect(x: widthPadding, y: 0, width: self.view!.bounds.width - widthPadding*2, height: 0))
+		
 		switch(section) {
 		case 1:
-			return "Vote for your favorite candidate as #1. If you want, vote a second and third choice in case your favorites don’t win. Only rank the candidates you would want to win."
+			label.text = "This list of candidates was provided in an arbitrary order."
 		default:
-			return "This list of candidates was provided in an arbitrary order."
+			label.text = "Vote for your favorite candidate as #1. If you want, vote a second and third choice in case your favorites don’t win. Only rank the candidates you would want to win."
 		}
-
+		
+		label.numberOfLines = 0;
+		label.textAlignment = NSTextAlignment.left
+		label.lineBreakMode = NSLineBreakMode.byWordWrapping
+		label.font = UIFont.preferredFont(forTextStyle: UIFont.TextStyle.footnote)
+		return label
+	}
 	
+	
+
+	override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+		if let header = view as? UITableViewHeaderFooterView {
+			header.textLabel!.font = UIFont.systemFont(ofSize: 17.0)
+			header.textLabel!.textColor = .red
+		}
 	}
 
 
