@@ -18,13 +18,18 @@ class MasterViewController: UITableViewController {
 		super.viewDidLoad()
 		// Do any additional setup after loading the view, typically from a nib.
 		navigationItem.leftBarButtonItem = editButtonItem
-
-		let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(insertNewObject(_:)))
-		navigationItem.rightBarButtonItem = addButton
 		if let split = splitViewController {
 		    let controllers = split.viewControllers
 		    detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
 		}
+		
+		
+		objects.append("Cheetah")
+		objects.append("Leopard")
+		objects.append("Lynx")
+		objects.append("Snow Leopard")
+		objects.append("Yosemite")
+
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
@@ -56,34 +61,79 @@ class MasterViewController: UITableViewController {
 	// MARK: - Table View
 
 	override func numberOfSections(in tableView: UITableView) -> Int {
-		return 1
+		return 2	// voting area, and candidate area
+	}
+	
+	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String {
+	
+		switch(section) {
+			case 1:
+				return "Your Candidates"
+			default:
+				return "Your Vote"
+		}
+	}
+	
+	override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String {
+	
+		switch(section) {
+		case 1:
+			return "Vote for your favorite candidate as #1. If you want, vote a second and third choice in case your favorites don’t win. Only rank the candidates you would want to win."
+		default:
+			return "This list of candidates was provided in an arbitrary order."
+		}
+
+	
 	}
 
+
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return objects.count
+		
+		switch(section) {
+		case 1:
+			return objects.count
+		default:
+			return 1
+		}
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+		
+		switch(indexPath.section) {
+		case 1:
 
-		let object = objects[indexPath.row] as! NSDate
-		cell.textLabel!.text = object.description
-		return cell
+			let cell = tableView.dequeueReusableCell(withIdentifier: "CandidatesCell", for: indexPath)
+			
+			let object = objects[indexPath.row] as! String
+			cell.textLabel!.text = object
+			return cell
+
+
+		default:
+
+			let cell = tableView.dequeueReusableCell(withIdentifier: "VotingCell", for: indexPath)
+			
+			cell.textLabel!.text = "TK"
+			return cell
+
+		}
+
+		
 	}
 
 	override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
 		// Return false if you do not want the specified item to be editable.
-		return true
+		return false
 	}
 
-	override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-		if editingStyle == .delete {
-		    objects.remove(at: indexPath.row)
-		    tableView.deleteRows(at: [indexPath], with: .fade)
-		} else if editingStyle == .insert {
-		    // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
-		}
-	}
+//	override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+//		if editingStyle == .delete {
+//		    objects.remove(at: indexPath.row)
+//		    tableView.deleteRows(at: [indexPath], with: .fade)
+//		} else if editingStyle == .insert {
+//		    // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
+//		}
+//	}
 
 
 }
