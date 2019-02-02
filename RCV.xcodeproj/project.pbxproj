@@ -15,6 +15,7 @@
 		CE508F77220617B600200401 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE508F75220617B600200401 /* LaunchScreen.storyboard */; };
 		CE508F82220617B600200401 /* RCVTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE508F81220617B600200401 /* RCVTests.swift */; };
 		CE508F8D220617B600200401 /* RCVUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE508F8C220617B600200401 /* RCVUITests.swift */; };
+		CE508F9B2206400500200401 /* VotingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE508F9A2206400500200401 /* VotingTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		CE508F88220617B600200401 /* RCVUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RCVUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE508F8C220617B600200401 /* RCVUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RCVUITests.swift; sourceTree = "<group>"; };
 		CE508F8E220617B600200401 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CE508F9A2206400500200401 /* VotingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VotingTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +105,7 @@
 				CE508F6C220617B400200401 /* MasterViewController.swift */,
 				CE508F6E220617B400200401 /* DetailViewController.swift */,
 				CE508F70220617B400200401 /* Main.storyboard */,
+				CE508F9A2206400500200401 /* VotingTableViewCell.swift */,
 				CE508F73220617B600200401 /* Assets.xcassets */,
 				CE508F75220617B600200401 /* LaunchScreen.storyboard */,
 				CE508F78220617B600200401 /* Info.plist */,
@@ -261,6 +264,7 @@
 			files = (
 				CE508F6F220617B400200401 /* DetailViewController.swift in Sources */,
 				CE508F6D220617B400200401 /* MasterViewController.swift in Sources */,
+				CE508F9B2206400500200401 /* VotingTableViewCell.swift in Sources */,
 				CE508F6B220617B400200401 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
