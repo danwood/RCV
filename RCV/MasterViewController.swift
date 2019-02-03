@@ -20,8 +20,8 @@ class MasterViewController: UITableViewController, UITableViewDragDelegate, UITa
 	var votes //= [[String:String]]()
 	=
 		[
-			["name": "Felix Cat", "file": "cat.png", "bio": "" ],
-			["name": "Lungren Dolphin", "file": "dolphin.png", "bio": "" ],
+			["name": "Ratatouille", "file": "rat.png", "bio": "" ],
+			["name": "Porky Pig", "file": "pig.png", "bio": "" ],
 			["name": "Snoop Dog", "file": "dog.png", "bio": "" ],
 			]
 	
@@ -33,9 +33,7 @@ class MasterViewController: UITableViewController, UITableViewDragDelegate, UITa
 			["name": "Snoop Dog", "file": "dog.png", "bio": "" ],
 			["name": "Koko Gorilla", "file": "gorilla.png", "bio": "" ],
 			["name": "Wilbur Horse", "file": "horse.png", "bio": "" ],
-			["name": "Porky Pig", "file": "pig.png", "bio": "" ],
 			["name": "Roger Rabbit", "file": "rabbit.png", "bio": "" ],
-			["name": "Ratatouille", "file": "rat.png", "bio": "" ],
 			["name": "Tony Tiger", "file": "tiger.png", "bio": "" ],
 	]
 
@@ -71,16 +69,43 @@ class MasterViewController: UITableViewController, UITableViewDragDelegate, UITa
 			
 		}
 		
-		do {
-			let jsonData = try JSONSerialization.data(withJSONObject: dictForJson, options: .prettyPrinted)
-			print(String(data:jsonData encoding:.utf8))
+		let jsonData = try? JSONSerialization.data(withJSONObject: dictForJson, options: .prettyPrinted)
+		print(String(data:jsonData!, encoding:.utf8))
 			
-			// post to https://rankchoice.herokuapp.com/votes
-			
-			
-		} catch {
-			print(error.localizedDescription)
+		// post to https://rankchoice.herokuapp.com/votes
+		
+		// create post request
+		let url = URL(string: "https://rankchoice.herokuapp.com/votes")!
+		var request = URLRequest(url: url)
+		request.httpMethod = "POST"
+		
+		// insert json data to the request
+		request.httpBody = jsonData
+		
+		let task = URLSession.shared.dataTask(with: request) { data, response, error in
+			guard let data = data, error == nil else {
+				print(error?.localizedDescription ?? "No data")
+				
+				let alert = UIAlertController(title: "Error", message: "No data from submission.", preferredStyle: .alert)
+				alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+				self.present(alert, animated: true)
+				
+				return
+			}
+			let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
+			if let responseJSON = responseJSON as? [String: Any] {
+				print(responseJSON)
+
+				let alert = UIAlertController(title: "Success", message: "responseJSON", preferredStyle: .alert)
+				alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+				self.present(alert, animated: true)
+
+
+			}
 		}
+		
+		task.resume()
+
 	}
 
 
