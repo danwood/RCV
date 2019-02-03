@@ -16,23 +16,23 @@ class MasterViewController: UITableViewController, UITableViewDragDelegate, UITa
 	
 	var votes // = [[String:String]]()
 = [
-	["name": "Lungren Dolphin", "file": "dolphin.png", "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut rutrum pretium erat, in mattis leo consectetur vitae. Phasellus venenatis est in tempus dignissim. Vestibulum elit elit, malesuada sed nunc vitae, ultrices tristique mi. Praesent convallis nunc leo. Phasellus quis ornare nisi. Vivamus vestibulum, elit at dignissim pharetra, ligula urna maximus quam, a sagittis diam nibh nec sem. Quisque convallis nunc quis dolor euismod ultricies. Praesent eget aliquet magna. Vestibulum posuere risus massa, quis vehicula eros scelerisque at." ],
-	["name": "Buto Rhinoceros", "file": "rhinoceros.png", "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut rutrum pretium erat, in mattis leo consectetur vitae. Phasellus venenatis est in tempus dignissim. Vestibulum elit elit, malesuada sed nunc vitae, ultrices tristique mi. Praesent convallis nunc leo. Phasellus quis ornare nisi. Vivamus vestibulum, elit at dignissim pharetra, ligula urna maximus quam, a sagittis diam nibh nec sem. Quisque convallis nunc quis dolor euismod ultricies. Praesent eget aliquet magna. Vestibulum posuere risus massa, quis vehicula eros scelerisque at." ]
+	["name": "Lungren Dolphin", "file": "dolphin.png", "bio": "" ],
+	["name": "Buto Rhinoceros", "file": "rhinoceros.png", "bio": "" ]
 	]
 	
 	var objects =
 	
 		[
-			["name": "Snoop Dog", "file": "dog.png", "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut rutrum pretium erat, in mattis leo consectetur vitae. Phasellus venenatis est in tempus dignissim. Vestibulum elit elit, malesuada sed nunc vitae, ultrices tristique mi. Praesent convallis nunc leo. Phasellus quis ornare nisi. Vivamus vestibulum, elit at dignissim pharetra, ligula urna maximus quam, a sagittis diam nibh nec sem. Quisque convallis nunc quis dolor euismod ultricies. Praesent eget aliquet magna. Vestibulum posuere risus massa, quis vehicula eros scelerisque at." ],
-			["name": "Wilbur Horse", "file": "horse.png", "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut rutrum pretium erat, in mattis leo consectetur vitae. Phasellus venenatis est in tempus dignissim. Vestibulum elit elit, malesuada sed nunc vitae, ultrices tristique mi. Praesent convallis nunc leo. Phasellus quis ornare nisi. Vivamus vestibulum, elit at dignissim pharetra, ligula urna maximus quam, a sagittis diam nibh nec sem. Quisque convallis nunc quis dolor euismod ultricies. Praesent eget aliquet magna. Vestibulum posuere risus massa, quis vehicula eros scelerisque at." ],
-			["name": "Felix Cat", "file": "cat.png", "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut rutrum pretium erat, in mattis leo consectetur vitae. Phasellus venenatis est in tempus dignissim. Vestibulum elit elit, malesuada sed nunc vitae, ultrices tristique mi. Praesent convallis nunc leo. Phasellus quis ornare nisi. Vivamus vestibulum, elit at dignissim pharetra, ligula urna maximus quam, a sagittis diam nibh nec sem. Quisque convallis nunc quis dolor euismod ultricies. Praesent eget aliquet magna. Vestibulum posuere risus massa, quis vehicula eros scelerisque at." ],
-			["name": "Koko Gorilla", "file": "gorilla.png", "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut rutrum pretium erat, in mattis leo consectetur vitae. Phasellus venenatis est in tempus dignissim. Vestibulum elit elit, malesuada sed nunc vitae, ultrices tristique mi. Praesent convallis nunc leo. Phasellus quis ornare nisi. Vivamus vestibulum, elit at dignissim pharetra, ligula urna maximus quam, a sagittis diam nibh nec sem. Quisque convallis nunc quis dolor euismod ultricies. Praesent eget aliquet magna. Vestibulum posuere risus massa, quis vehicula eros scelerisque at." ],
-			["name": "Ratatouille", "file": "rat.png", "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut rutrum pretium erat, in mattis leo consectetur vitae. Phasellus venenatis est in tempus dignissim. Vestibulum elit elit, malesuada sed nunc vitae, ultrices tristique mi. Praesent convallis nunc leo. Phasellus quis ornare nisi. Vivamus vestibulum, elit at dignissim pharetra, ligula urna maximus quam, a sagittis diam nibh nec sem. Quisque convallis nunc quis dolor euismod ultricies. Praesent eget aliquet magna. Vestibulum posuere risus massa, quis vehicula eros scelerisque at." ],
-			["name": "Porky Pig", "file": "pig.png", "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut rutrum pretium erat, in mattis leo consectetur vitae. Phasellus venenatis est in tempus dignissim. Vestibulum elit elit, malesuada sed nunc vitae, ultrices tristique mi. Praesent convallis nunc leo. Phasellus quis ornare nisi. Vivamus vestibulum, elit at dignissim pharetra, ligula urna maximus quam, a sagittis diam nibh nec sem. Quisque convallis nunc quis dolor euismod ultricies. Praesent eget aliquet magna. Vestibulum posuere risus massa, quis vehicula eros scelerisque at." ],
-			["name": "Roger Rabbit", "file": "rabbit.png", "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut rutrum pretium erat, in mattis leo consectetur vitae. Phasellus venenatis est in tempus dignissim. Vestibulum elit elit, malesuada sed nunc vitae, ultrices tristique mi. Praesent convallis nunc leo. Phasellus quis ornare nisi. Vivamus vestibulum, elit at dignissim pharetra, ligula urna maximus quam, a sagittis diam nibh nec sem. Quisque convallis nunc quis dolor euismod ultricies. Praesent eget aliquet magna. Vestibulum posuere risus massa, quis vehicula eros scelerisque at." ],
-			["name": "Tony Tiger", "file": "tiger.png", "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut rutrum pretium erat, in mattis leo consectetur vitae. Phasellus venenatis est in tempus dignissim. Vestibulum elit elit, malesuada sed nunc vitae, ultrices tristique mi. Praesent convallis nunc leo. Phasellus quis ornare nisi. Vivamus vestibulum, elit at dignissim pharetra, ligula urna maximus quam, a sagittis diam nibh nec sem. Quisque convallis nunc quis dolor euismod ultricies. Praesent eget aliquet magna. Vestibulum posuere risus massa, quis vehicula eros scelerisque at." ],
-			["name": "Lungren Dolphin", "file": "dolphin.png", "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut rutrum pretium erat, in mattis leo consectetur vitae. Phasellus venenatis est in tempus dignissim. Vestibulum elit elit, malesuada sed nunc vitae, ultrices tristique mi. Praesent convallis nunc leo. Phasellus quis ornare nisi. Vivamus vestibulum, elit at dignissim pharetra, ligula urna maximus quam, a sagittis diam nibh nec sem. Quisque convallis nunc quis dolor euismod ultricies. Praesent eget aliquet magna. Vestibulum posuere risus massa, quis vehicula eros scelerisque at." ],
-			["name": "Buto Rhinoceros", "file": "rhinoceros.png", "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut rutrum pretium erat, in mattis leo consectetur vitae. Phasellus venenatis est in tempus dignissim. Vestibulum elit elit, malesuada sed nunc vitae, ultrices tristique mi. Praesent convallis nunc leo. Phasellus quis ornare nisi. Vivamus vestibulum, elit at dignissim pharetra, ligula urna maximus quam, a sagittis diam nibh nec sem. Quisque convallis nunc quis dolor euismod ultricies. Praesent eget aliquet magna. Vestibulum posuere risus massa, quis vehicula eros scelerisque at." ]
+			["name": "Snoop Dog", "file": "dog.png", "bio": "" ],
+			["name": "Wilbur Horse", "file": "horse.png", "bio": "" ],
+			["name": "Felix Cat", "file": "cat.png", "bio": "" ],
+			["name": "Koko Gorilla", "file": "gorilla.png", "bio": "" ],
+			["name": "Ratatouille", "file": "rat.png", "bio": "" ],
+			["name": "Porky Pig", "file": "pig.png", "bio": "" ],
+			["name": "Roger Rabbit", "file": "rabbit.png", "bio": "" ],
+			["name": "Tony Tiger", "file": "tiger.png", "bio": "" ],
+			["name": "Lungren Dolphin", "file": "dolphin.png", "bio": "" ],
+			["name": "Buto Rhinoceros", "file": "rhinoceros.png", "bio": "" ]
 	]
 
 	// DRAG OUT OF TABLE VIEW …
@@ -41,9 +41,10 @@ class MasterViewController: UITableViewController, UITableViewDragDelegate, UITa
 
 		if indexPath.section == 1 {
 			let dict = objects[indexPath.row]
-			let data:Data = NSKeyedArchiver.archivedData(withRootObject: dict)
-			let itemProvider = NSItemProvider(item: data as NSData, typeIdentifier: "???")
-			return [UIDragItem(itemProvider: itemProvider)]
+			let itemProvider = NSItemProvider(object: dict["name"]! as NSString)
+			let dragItem = UIDragItem(itemProvider: itemProvider)
+			dragItem.localObject = dict
+			return [dragItem]
 		}
 		return []
 	}
@@ -55,14 +56,15 @@ class MasterViewController: UITableViewController, UITableViewDragDelegate, UITa
 		
 		if votes.count > indexPath.row {
 			let dict = votes[indexPath.row]
-			let data:Data = NSKeyedArchiver.archivedData(withRootObject: dict)
-			let itemProvider = NSItemProvider(item: data as NSData, typeIdentifier: "???")
-			return [UIDragItem(itemProvider: itemProvider)]
+			let itemProvider = NSItemProvider(object: dict["name"]! as NSString)
+			let dragItem = UIDragItem(itemProvider: itemProvider)
+			dragItem.localObject = dict
+			return [dragItem]
 		}
 		return []
 	}
 
-	// DROP INTO COLLECTION VIEW …
+	// DROP INTO COLLECTION VIEW … to add a vote
 	
 	func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) {
 		
@@ -76,31 +78,25 @@ class MasterViewController: UITableViewController, UITableViewDragDelegate, UITa
 			destinationIndexPath = IndexPath(row: row, section: section)
 		}
 
-		// attempt to load strings from the drop coordinator
-		coordinator.session.loadObjects(ofClass: NSString.self) { items in
-			// convert the item provider array to a string array or bail out
-			guard let strings = items as? [String] else { return }
-
-			// create an empty array to track rows we've copied
-			var indexPaths = [IndexPath]()
-
-			// loop over all the strings we received
-			for (index, string) in strings.enumerated() {
-//				// create an index path for this new row, moving it down depending on how many we've already inserted
-//				let indexPath = IndexPath(row: destinationIndexPath.row + index, section: destinationIndexPath.section)
-//
-//				// insert the copy into the correct array
-//				//	self.rightItems.insert(string, at: indexPath.row)
-//
-//				// keep track of this new row
-//				indexPaths.append(indexPath)
+		for (index, item) in coordinator.items.enumerated()
+		{
+			print(item.sourceIndexPath)
+			//Destination index path for each item is calculated separately using the destinationIndexPath fetched from the coordinator
+			let indexPath = IndexPath(row: destinationIndexPath.row + index, section: destinationIndexPath.section)
+			let localObject = item.dragItem.localObject as! [String:String]
+			print(localObject.debugDescription)
+			
+			var row = destinationIndexPath.row
+			if row > votes.count {
+				row = votes.count
 			}
+			votes.insert(localObject, at: row)
+			if votes.count > 3 {
+				votes.removeLast(votes.count - 3)
+			}
+			self.collectionView?.reloadData()
 
-			// insert them all into the table view at once
-			// self.tableView.insertRows(at: indexPaths, with: .automatic)
 		}
-
-		
 	}
 	
 	// OR TABLEVIEW … (to remove from vote)
@@ -117,30 +113,15 @@ class MasterViewController: UITableViewController, UITableViewDragDelegate, UITa
 			destinationIndexPath = IndexPath(row: row, section: section)
 		}
 
-		// attempt to load strings from the drop coordinator
-		coordinator.session.loadObjects(ofClass: NSString.self) { items in
-			// convert the item provider array to a string array or bail out
-			guard let strings = items as? [String] else { return }
-
-			// create an empty array to track rows we've copied
-			var indexPaths = [IndexPath]()
-
-			// loop over all the strings we received
-			for (index, string) in strings.enumerated() {
-				// create an index path for this new row, moving it down depending on how many we've already inserted
-//				let indexPath = IndexPath(row: destinationIndexPath.row + index, section: destinationIndexPath.section)
-//
-//				// insert the copy into the correct array
-//				//	self.rightItems.insert(string, at: indexPath.row)
-//
-//				// keep track of this new row
-//				indexPaths.append(indexPath)
-			}
-
-			// insert them all into the table view at once
-			// self.tableView.insertRows(at: indexPaths, with: .automatic)
+		for (index, item) in coordinator.items.enumerated()
+		{
+			print(item.sourceIndexPath)
+			//Destination index path for each item is calculated separately using the destinationIndexPath fetched from the coordinator
+			let indexPath = IndexPath(row: destinationIndexPath.row + index, section: destinationIndexPath.section)
+			let localObject = item.dragItem.localObject
+			print(localObject.debugDescription)
+			
 		}
-
 		
 	}
 	
