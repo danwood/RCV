@@ -17,7 +17,13 @@ class MasterViewController: UITableViewController, UITableViewDragDelegate, UITa
 
 	var detailViewController: DetailViewController? = nil
 	
-	var votes = [[String:String]]()
+	var votes //= [[String:String]]()
+	=
+		[
+			["name": "Felix Cat", "file": "cat.png", "bio": "" ],
+			["name": "Lungren Dolphin", "file": "dolphin.png", "bio": "" ],
+			["name": "Snoop Dog", "file": "dog.png", "bio": "" ],
+			]
 	
 	var objects =
 	
@@ -30,11 +36,21 @@ class MasterViewController: UITableViewController, UITableViewDragDelegate, UITa
 			["name": "Porky Pig", "file": "pig.png", "bio": "" ],
 			["name": "Roger Rabbit", "file": "rabbit.png", "bio": "" ],
 			["name": "Ratatouille", "file": "rat.png", "bio": "" ],
-			["name": "Buto Rhinoceros", "file": "rhinoceros.png", "bio": "" ],
 			["name": "Tony Tiger", "file": "tiger.png", "bio": "" ],
 	]
 
 
+	func indexOfName(_ name:String) -> Int {
+		
+		var i = 0
+		for object in objects {
+			if name == object["name"] {
+				return i
+			}
+			i += 1
+		}
+		return -1
+	}
 	
 
 	@IBAction func sliderFinished(_ sender: SliderControl) {
@@ -42,8 +58,29 @@ class MasterViewController: UITableViewController, UITableViewDragDelegate, UITa
 		print("Finished")
 		sender.isHidden = true	// make sure we can't vote now
 		
+		var dictForJson = ["election_id": 1]
 		
+		var i = 0
+		for vote in votes {
+			
+			let voteName = vote["name"]
+			let candidateIndex = indexOfName(voteName!)
+			let choiceKey = "choice" + String(i)
+			dictForJson[choiceKey] = candidateIndex
+			i += 1
+			
+		}
 		
+		do {
+			let jsonData = try JSONSerialization.data(withJSONObject: dictForJson, options: .prettyPrinted)
+			print(String(data:jsonData encoding:.utf8))
+			
+			// post to https://rankchoice.herokuapp.com/votes
+			
+			
+		} catch {
+			print(error.localizedDescription)
+		}
 	}
 
 
