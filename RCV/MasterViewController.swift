@@ -14,10 +14,9 @@ class MasterViewController: UITableViewController, UITableViewDragDelegate, UITa
 
 	var detailViewController: DetailViewController? = nil
 	
-	var votes // = [[String:String]]()
-= [
-	["name": "Lungren Dolphin", "file": "dolphin.png", "bio": "" ],
-	["name": "Buto Rhinoceros", "file": "rhinoceros.png", "bio": "" ]
+	var votes = [
+		["name": "Lungren Dolphin", "file": "dolphin.png", "bio": "" ],
+		["name": "Buto Rhinoceros", "file": "rhinoceros.png", "bio": "" ]
 	]
 	
 	var objects =
@@ -35,12 +34,19 @@ class MasterViewController: UITableViewController, UITableViewDragDelegate, UITa
 			["name": "Buto Rhinoceros", "file": "rhinoceros.png", "bio": "" ]
 	]
 
+
 	// DRAG OUT OF TABLE VIEW …
 	
 	func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
 
 		if indexPath.section == 1 {
 			let dict = objects[indexPath.row]
+			
+			for vote in votes {
+				if vote["name"] == dict["name"] {
+					return []						// EARLY EXIT - CAN'T VOTE MORE THAN ONCE, SO NO DRAGGING OUT
+				}
+			}
 			let itemProvider = NSItemProvider(object: dict["name"]! as NSString)
 			let dragItem = UIDragItem(itemProvider: itemProvider)
 			dragItem.localObject = dict
@@ -64,7 +70,7 @@ class MasterViewController: UITableViewController, UITableViewDragDelegate, UITa
 		return []
 	}
 
-	// DROP INTO COLLECTION VIEW … to add a vote
+	// DROP INTO COLLECTION VIEW … to add a vote.  SHOULD HANDLE INTRA-COLLECTION MOVE BUT NOTHING HAPPENS!
 	
 	func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) {
 		
@@ -80,26 +86,59 @@ class MasterViewController: UITableViewController, UITableViewDragDelegate, UITa
 
 		for (index, item) in coordinator.items.enumerated()
 		{
-			print(item.sourceIndexPath)
 			//Destination index path for each item is calculated separately using the destinationIndexPath fetched from the coordinator
 			let indexPath = IndexPath(row: destinationIndexPath.row + index, section: destinationIndexPath.section)
 			let localObject = item.dragItem.localObject as! [String:String]
-			print(localObject.debugDescription)
 			
-			var row = destinationIndexPath.row
-			if row > votes.count {
-				row = votes.count
+			var destRow = destinationIndexPath.row
+
+			
+			
+			if item.sourceIndexPath != nil && item.sourceIndexPath?.section == 0
+			{
+				// from VOTES into VOTES … rearrange!
+				let sourceRow = item.sourceIndexPath!.row
+				if sourceRow == destRow // possible????
+					|| (sourceRow >= votes.count - 1  && destRow >= votes.count) {
+					// do nothing if moving last one to higher row
+					print("not incrementing")
+					
+				}
+				else
+				{
+					print("Source = \(sourceRow) Dest = \(destRow) Count = " + String(votes.count))
+					if (sourceRow > destRow) {
+						votes.swapAt(sourceRow, destRow)
+					}
+					else	// destRow > sourceRow
+					{
+						if (destRow >= votes.count) {
+							destRow = votes.count - 1
+						}
+						votes.swapAt(sourceRow, destRow)
+					}
+				}
+			
 			}
-			votes.insert(localObject, at: row)
-			if votes.count > 3 {
-				votes.removeLast(votes.count - 3)
+			else
+			{
+				// from CANDIDATES into VOTES - insert, possibly lop off the end to keep at 3
+				if destRow > votes.count {
+					destRow = votes.count
+				}
+				votes.insert(localObject, at: destRow)
+				if votes.count > 3 {
+					votes.removeLast(votes.count - 3)
+				}
 			}
+			
 			self.collectionView?.reloadData()
+			self.tableView?.reloadData()			// also reload table view since display will be affected
 
 		}
 	}
 	
-	// OR TABLEVIEW … (to remove from vote)
+	// OR TABLEVIEW … (to remove from vote). SHOULD HANDLE INTRA-TABLEVIEW, BUT NOTHING HAPPENS.
 	
 	func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator ) {
 		
@@ -115,15 +154,70 @@ class MasterViewController: UITableViewController, UITableViewDragDelegate, UITa
 
 		for (index, item) in coordinator.items.enumerated()
 		{
-			print(item.sourceIndexPath)
 			//Destination index path for each item is calculated separately using the destinationIndexPath fetched from the coordinator
 			let indexPath = IndexPath(row: destinationIndexPath.row + index, section: destinationIndexPath.section)
-			let localObject = item.dragItem.localObject
-			print(localObject.debugDescription)
+			let localObject = item.dragItem.localObject as! [String:String]
+			let name = localObject["name"]
+			// We don't really care where it was dropped; if it came from collection view, we are throwing it away.
 			
+			var i = 0, foundIndex = -1
+			for vote in votes {
+				if vote["name"] == name {
+					foundIndex = i
+					break
+				}
+				i += 1
+			}
+			if (foundIndex >= 0) {
+				votes.remove(at: foundIndex)
+				self.collectionView?.reloadData()
+				self.tableView?.reloadData()			// also reload table view since display will be affected
+			}
 		}
 		
 	}
+
+	
+	func collectionView(_ collectionView: UICollectionView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UICollectionViewDropProposal
+	{
+		if session.localDragSession != nil
+		{
+			if collectionView.hasActiveDrag
+			{
+				// from collection into table
+				return UICollectionViewDropProposal(operation: .move, intent: .unspecified)
+			}
+			else
+			{
+				// from table into collection
+				return UICollectionViewDropProposal(operation: .move, intent: .unspecified)
+			}
+		}
+		// collection into table
+		return UICollectionViewDropProposal(operation: .move, intent: .unspecified)
+	}
+
+	
+	func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
+		
+		if session.localDragSession != nil
+		{
+			if tableView.hasActiveDrag
+			{
+				// from table into collection
+				return UITableViewDropProposal(operation: .move, intent: .unspecified)
+			}
+			else
+			{
+				// from collection into table
+				return UITableViewDropProposal(operation: .move, intent: .unspecified)
+			}
+		}
+		return UITableViewDropProposal(operation: .move, intent: .unspecified)
+
+	}
+	
+	
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -176,37 +270,44 @@ class MasterViewController: UITableViewController, UITableViewDragDelegate, UITa
 	}
 	
 	override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-		//Need to create a label with the text we want in order to figure out height
-		let label: UILabel = createFooterLabel(section)
-		let size = label.sizeThatFits(CGSize(width: view!.bounds.width, height: CGFloat.greatestFiniteMagnitude))
-		let padding: CGFloat = 20.0
-		return size.height + padding
+		
+		if (section == 0) {
+			//Need to create a label with the text we want in order to figure out height
+			let label: UILabel = createFooterLabel(section)
+			let size = label.sizeThatFits(CGSize(width: view!.bounds.width, height: CGFloat.greatestFiniteMagnitude))
+			let padding: CGFloat = 20.0
+			return size.height + padding
+		}
+		return 0
 	}
 	
 	override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-		let footerView = UITableViewHeaderFooterView()
-		let label = createFooterLabel(section)
-		label.autoresizingMask = [.flexibleHeight]
-		footerView.addSubview(label)
-		return footerView
+		if (section == 0) {
+			let footerView = UITableViewHeaderFooterView()
+			let label = createFooterLabel(section)
+			label.autoresizingMask = [.flexibleHeight]
+			footerView.addSubview(label)
+			return footerView
+		}
+		return nil
 	}
 	
 	func createFooterLabel(_ section: Int)->UILabel {
-		let widthPadding: CGFloat = 20.0
-		let label: UILabel = UILabel(frame: CGRect(x: widthPadding, y: 0, width: self.view!.bounds.width - widthPadding*2, height: 0))
 		
-		switch(section) {
-		case 1:
-			label.text = "This list of candidates was provided in an arbitrary order."
-		default:
+		if (section == 0) {
+
+			let widthPadding: CGFloat = 20.0
+			let label: UILabel = UILabel(frame: CGRect(x: widthPadding, y: 0, width: self.view!.bounds.width - widthPadding*2, height: 0))
+			
 			label.text = "Vote for your favorite candidate as #1. If you want, vote a second and third choice in case your favorites don’t win. Only rank the candidates you would want to win."
+			
+			label.numberOfLines = 0;
+			label.textAlignment = NSTextAlignment.left
+			label.lineBreakMode = NSLineBreakMode.byWordWrapping
+			label.font = UIFont.preferredFont(forTextStyle: UIFont.TextStyle.footnote)
+			return label
 		}
-		
-		label.numberOfLines = 0;
-		label.textAlignment = NSTextAlignment.left
-		label.lineBreakMode = NSLineBreakMode.byWordWrapping
-		label.font = UIFont.preferredFont(forTextStyle: UIFont.TextStyle.footnote)
-		return label
+		return UILabel()
 	}
 	
 override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -241,11 +342,22 @@ override func tableView(_ tableView: UITableView, heightForRowAt indexPath: Inde
 
 			let cell = tableView.dequeueReusableCell(withIdentifier: "CandidatesCell", for: indexPath)
 			
-			let object = objects[indexPath.row] ["name"]
-			cell.textLabel!.text = object
+			let name = objects[indexPath.row] ["name"]
+			cell.textLabel!.text = name
 
+			// Check if already voted for; if so, make it look disabled
+			var votedAlready = false
+			for vote in votes {
+				if vote["name"] == name {
+					votedAlready = true
+					break
+				}
+			}
+			cell.textLabel!.textColor = votedAlready ? .lightGray : .black
+			
 			if let im = objects[indexPath.row] ["file"] {
 				cell.imageView!.image = UIImage(named: im)
+				cell.imageView!.alpha = votedAlready ? 0.5 : 1.0
 			}
 			
 			cell.accessoryType = .disclosureIndicator
@@ -270,17 +382,6 @@ override func tableView(_ tableView: UITableView, heightForRowAt indexPath: Inde
 		// Return false if you do not want the specified item to be editable.
 		return false
 	}
-
-//	override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-//		if editingStyle == .delete {
-//		    objects.remove(at: indexPath.row)
-//		    tableView.deleteRows(at: [indexPath], with: .fade)
-//		} else if editingStyle == .insert {
-//		    // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
-//		}
-//	}
-
-	
 }
 
 
@@ -291,6 +392,7 @@ extension MasterViewController: UICollectionViewDelegate, UICollectionViewDataSo
 	{
 		self.votes.remove(at: sender.tag)
 		self.collectionView?.reloadData()
+		self.tableView?.reloadData()			// display will also be affected
 	}
 	
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -309,7 +411,7 @@ extension MasterViewController: UICollectionViewDelegate, UICollectionViewDataSo
 			
 			image.image = UIImage(named:data["file"]!)
 			label.text = data["name"]
-			closeButton.isHidden = false;
+			closeButton.isHidden = true;			// false --- do I want this at all?
 			closeButton.tag = indexPath.row
 			closeButton.addTarget(self, action: Selector("didPressCloseButton:"), for: .touchUpInside)
 		}
