@@ -8,7 +8,10 @@
 
 import UIKit
 
+
 class MasterViewController: UITableViewController, UITableViewDragDelegate, UITableViewDropDelegate, UICollectionViewDragDelegate, UICollectionViewDropDelegate {
+
+	@IBOutlet weak var topSlider: SliderControl!
 
 	var collectionView : UICollectionView? = nil
 
@@ -32,11 +35,27 @@ class MasterViewController: UITableViewController, UITableViewDragDelegate, UITa
 	]
 
 
+	
+
+	@IBAction func sliderFinished(_ sender: SliderControl) {
+
+		print("Finished")
+		sender.isHidden = true	// make sure we can't vote now
+		
+		
+		
+	}
+
+
+
+
+
+
 	// DRAG OUT OF TABLE VIEW …
 	
 	func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
 
-		if indexPath.section == 1 {
+		if indexPath.section == 2 {
 			let dict = objects[indexPath.row]
 			
 			for vote in votes {
@@ -113,7 +132,7 @@ class MasterViewController: UITableViewController, UITableViewDragDelegate, UITa
 				}
 			
 			}
-			else
+			else if item.sourceIndexPath?.section == 2
 			{
 				// from CANDIDATES into VOTES - insert, possibly lop off the end to keep at 3
 				if destRow > votes.count {
@@ -248,14 +267,16 @@ class MasterViewController: UITableViewController, UITableViewDragDelegate, UITa
 	// MARK: - Table View
 
 	override func numberOfSections(in tableView: UITableView) -> Int {
-		return 2	// voting area, and candidate area
+		return 3	// voting area, submit control, and candidate area
 	}
 	
 	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String {
 	
 		switch(section) {
-			case 1:
+			case 2:
 				return "Your Candidates"
+			case 1:
+				return "Slide to cast your vote"
 			default:
 				return "Your Vote — Drag candidates below"
 		}
@@ -302,12 +323,15 @@ class MasterViewController: UITableViewController, UITableViewDragDelegate, UITa
 		return UILabel()
 	}
 	
-override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-	if indexPath.section == 0 {
-		return 88;
+	override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+		if indexPath.section == 0 {
+			return 88;
+		}
+		if indexPath.section == 1 {
+			return 68;
+		}
+		return -1;
 	}
-	return -1;
-}
 
 	override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
 		if let header = view as? UITableViewHeaderFooterView {
@@ -320,7 +344,7 @@ override func tableView(_ tableView: UITableView, heightForRowAt indexPath: Inde
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		
 		switch(section) {
-		case 1:
+		case 2:
 			return objects.count
 		default:
 			return 1
@@ -330,7 +354,7 @@ override func tableView(_ tableView: UITableView, heightForRowAt indexPath: Inde
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		
 		switch(indexPath.section) {
-		case 1:
+		case 2:
 
 			let cell = tableView.dequeueReusableCell(withIdentifier: "CandidatesCell", for: indexPath)
 			
@@ -355,7 +379,11 @@ override func tableView(_ tableView: UITableView, heightForRowAt indexPath: Inde
 			cell.accessoryType = .disclosureIndicator
 
 			return cell
-
+		
+		case 1:
+			let cell = tableView.dequeueReusableCell(withIdentifier: "SliderCell", for: indexPath)
+			return cell
+			
 
 		default:
 
@@ -367,7 +395,7 @@ override func tableView(_ tableView: UITableView, heightForRowAt indexPath: Inde
 	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
 		guard let tableViewCell = cell as? VotingTableViewCell else { return }
 		
-		tableViewCell.setCollectionViewDataSourceDelegate(dataSourceDelegate: self, forRow: indexPath.row)
+		tableViewCell.setCollectionViewDataSourceDelegate(dataSourceDelegate: self as! UICollectionViewDataSource & UICollectionViewDelegate, forRow: indexPath.row)
 	}
 
 	override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -375,7 +403,6 @@ override func tableView(_ tableView: UITableView, heightForRowAt indexPath: Inde
 		return false
 	}
 }
-
 
 
 extension MasterViewController: UICollectionViewDelegate, UICollectionViewDataSource {

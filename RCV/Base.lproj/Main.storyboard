@@ -173,6 +173,46 @@
                                     <segue destination="vC3-pB-5Vb" kind="showDetail" identifier="showDetail" id="aZ1-Ov-4rd"/>
                                 </connections>
                             </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SliderCell" rowHeight="68" id="zVL-6c-kJ9">
+                                <rect key="frame" x="0.0" y="160" width="375" height="68"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zVL-6c-kJ9" id="l1H-yE-qys">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="67.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="swE-fX-iBe" customClass="SliderControl" customModule="RCV" customModuleProvider="target">
+                                            <rect key="frame" x="16" y="11" width="343" height="46"/>
+                                            <color key="backgroundColor" red="0.54117647059999996" green="0.85490196080000003" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                    <integer key="value" value="24"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="sliderWidth">
+                                                    <integer key="value" value="50"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="string" keyPath="sliderText" value="Slide the circle "/>
+                                                <userDefinedRuntimeAttribute type="color" keyPath="sliderColor">
+                                                    <color key="value" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="color" keyPath="textColor">
+                                                    <color key="value" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="image" keyPath="sliderImage" value="chevron"/>
+                                            </userDefinedRuntimeAttributes>
+                                            <connections>
+                                                <action selector="sliderFinished:" destination="7bK-jq-Zjz" eventType="editingDidEnd" id="Lsm-7v-CuO"/>
+                                            </connections>
+                                        </view>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailingMargin" secondItem="swE-fX-iBe" secondAttribute="trailing" id="PKj-Xj-mw8"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="swE-fX-iBe" secondAttribute="bottom" id="Q6M-hu-HxH"/>
+                                        <constraint firstItem="swE-fX-iBe" firstAttribute="leading" secondItem="l1H-yE-qys" secondAttribute="leadingMargin" id="Xge-jY-hOR"/>
+                                        <constraint firstItem="swE-fX-iBe" firstAttribute="top" secondItem="l1H-yE-qys" secondAttribute="topMargin" id="nZg-B9-1XC"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </tableViewCell>
                         </prototypes>
                         <sections/>
                         <connections>
@@ -204,6 +244,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="chevron" width="512" height="512"/>
         <image name="redx" width="64" height="64"/>
     </resources>
     <inferredMetricsTieBreakers>
