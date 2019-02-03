@@ -15,23 +15,24 @@ class MasterViewController: UITableViewController, UITableViewDragDelegate, UITa
 	var detailViewController: DetailViewController? = nil
 	
 	var votes = [
+		["name": "Felix Cat", "file": "cat.png", "bio": "" ],
 		["name": "Lungren Dolphin", "file": "dolphin.png", "bio": "" ],
-		["name": "Buto Rhinoceros", "file": "rhinoceros.png", "bio": "" ]
+		["name": "Snoop Dog", "file": "dog.png", "bio": "" ],
 	]
 	
 	var objects =
 	
 		[
-			["name": "Snoop Dog", "file": "dog.png", "bio": "" ],
-			["name": "Wilbur Horse", "file": "horse.png", "bio": "" ],
 			["name": "Felix Cat", "file": "cat.png", "bio": "" ],
+			["name": "Lungren Dolphin", "file": "dolphin.png", "bio": "" ],
+			["name": "Snoop Dog", "file": "dog.png", "bio": "" ],
 			["name": "Koko Gorilla", "file": "gorilla.png", "bio": "" ],
-			["name": "Ratatouille", "file": "rat.png", "bio": "" ],
+			["name": "Wilbur Horse", "file": "horse.png", "bio": "" ],
 			["name": "Porky Pig", "file": "pig.png", "bio": "" ],
 			["name": "Roger Rabbit", "file": "rabbit.png", "bio": "" ],
+			["name": "Ratatouille", "file": "rat.png", "bio": "" ],
+			["name": "Buto Rhinoceros", "file": "rhinoceros.png", "bio": "" ],
 			["name": "Tony Tiger", "file": "tiger.png", "bio": "" ],
-			["name": "Lungren Dolphin", "file": "dolphin.png", "bio": "" ],
-			["name": "Buto Rhinoceros", "file": "rhinoceros.png", "bio": "" ]
 	]
 
 
@@ -107,16 +108,12 @@ class MasterViewController: UITableViewController, UITableViewDragDelegate, UITa
 				else
 				{
 					print("Source = \(sourceRow) Dest = \(destRow) Count = " + String(votes.count))
-					if (sourceRow > destRow) {
-						votes.swapAt(sourceRow, destRow)
+					if (destRow >= votes.count) {
+						destRow = votes.count - 1
 					}
-					else	// destRow > sourceRow
-					{
-						if (destRow >= votes.count) {
-							destRow = votes.count - 1
-						}
-						votes.swapAt(sourceRow, destRow)
-					}
+
+					let removed = votes.remove(at:sourceRow)
+					votes.insert(removed, at: destRow)
 				}
 			
 			}
