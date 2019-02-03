@@ -8,9 +8,18 @@
 
 import UIKit
 
-class MasterViewController: UITableViewController {
+class MasterViewController: UITableViewController, UITableViewDragDelegate, UICollectionViewDragDelegate, UICollectionViewDropDelegate {
+
+	var collectionView : UICollectionView? = nil
 
 	var detailViewController: DetailViewController? = nil
+	
+	var votes // = [[String:String]]()
+= [
+	["name": "Lungren Dolphin", "file": "dolphin.png", "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut rutrum pretium erat, in mattis leo consectetur vitae. Phasellus venenatis est in tempus dignissim. Vestibulum elit elit, malesuada sed nunc vitae, ultrices tristique mi. Praesent convallis nunc leo. Phasellus quis ornare nisi. Vivamus vestibulum, elit at dignissim pharetra, ligula urna maximus quam, a sagittis diam nibh nec sem. Quisque convallis nunc quis dolor euismod ultricies. Praesent eget aliquet magna. Vestibulum posuere risus massa, quis vehicula eros scelerisque at." ],
+	["name": "Roger Rhinoceros", "file": "rhinoceros.png", "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut rutrum pretium erat, in mattis leo consectetur vitae. Phasellus venenatis est in tempus dignissim. Vestibulum elit elit, malesuada sed nunc vitae, ultrices tristique mi. Praesent convallis nunc leo. Phasellus quis ornare nisi. Vivamus vestibulum, elit at dignissim pharetra, ligula urna maximus quam, a sagittis diam nibh nec sem. Quisque convallis nunc quis dolor euismod ultricies. Praesent eget aliquet magna. Vestibulum posuere risus massa, quis vehicula eros scelerisque at." ]
+	]
+	
 	var objects =
 	
 		[
@@ -26,6 +35,66 @@ class MasterViewController: UITableViewController {
 			["name": "Roger Rhinoceros", "file": "rhinoceros.png", "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut rutrum pretium erat, in mattis leo consectetur vitae. Phasellus venenatis est in tempus dignissim. Vestibulum elit elit, malesuada sed nunc vitae, ultrices tristique mi. Praesent convallis nunc leo. Phasellus quis ornare nisi. Vivamus vestibulum, elit at dignissim pharetra, ligula urna maximus quam, a sagittis diam nibh nec sem. Quisque convallis nunc quis dolor euismod ultricies. Praesent eget aliquet magna. Vestibulum posuere risus massa, quis vehicula eros scelerisque at." ]
 	]
 
+	// DRAG OUT OF TABLE VIEW …
+	
+	func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+		
+		let dict = objects[indexPath.row]
+		let data:Data = NSKeyedArchiver.archivedData(withRootObject: dict)
+		let itemProvider = NSItemProvider(item: data as NSData, typeIdentifier: "???")
+		return [UIDragItem(itemProvider: itemProvider)]
+	}
+	
+	func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+		
+		let dict = objects[indexPath.row]
+		let data:Data = NSKeyedArchiver.archivedData(withRootObject: dict)
+		let itemProvider = NSItemProvider(item: data as NSData, typeIdentifier: "???")
+		return [UIDragItem(itemProvider: itemProvider)]
+
+	}
+
+	// DROP INTO COLLECTION VIEW …
+	
+	func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) {
+		
+		let destinationIndexPath: IndexPath
+		
+		if let indexPath = coordinator.destinationIndexPath {
+			destinationIndexPath = indexPath
+		} else {
+			let section = tableView.numberOfSections - 1
+			let row = tableView.numberOfRows(inSection: section)
+			destinationIndexPath = IndexPath(row: row, section: section)
+		}
+
+		// attempt to load strings from the drop coordinator
+		coordinator.session.loadObjects(ofClass: NSString.self) { items in
+			// convert the item provider array to a string array or bail out
+			guard let strings = items as? [String] else { return }
+			
+			// create an empty array to track rows we've copied
+			var indexPaths = [IndexPath]()
+			
+			// loop over all the strings we received
+			for (index, string) in strings.enumerated() {
+				// create an index path for this new row, moving it down depending on how many we've already inserted
+				let indexPath = IndexPath(row: destinationIndexPath.row + index, section: destinationIndexPath.section)
+				
+				// insert the copy into the correct array
+				//	self.rightItems.insert(string, at: indexPath.row)
+				
+				// keep track of this new row
+				indexPaths.append(indexPath)
+			}
+			
+			// insert them all into the table view at once
+			// self.tableView.insertRows(at: indexPaths, with: .automatic)
+		}
+
+		
+	}
+	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		// Do any additional setup after loading the view, typically from a nib.
@@ -35,6 +104,9 @@ class MasterViewController: UITableViewController {
 		    detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
 		}
 	
+		tableView.dragDelegate = self;
+		tableView.dragInteractionEnabled = true
+
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
@@ -144,6 +216,9 @@ override func tableView(_ tableView: UITableView, heightForRowAt indexPath: Inde
 			if let im = objects[indexPath.row] ["file"] {
 				cell.imageView!.image = UIImage(named: im)
 			}
+			
+			cell.accessoryType = .disclosureIndicator
+
 			return cell
 
 
@@ -151,7 +226,6 @@ override func tableView(_ tableView: UITableView, heightForRowAt indexPath: Inde
 
 			let cell = tableView.dequeueReusableCell(withIdentifier: "VotingCell", for: indexPath)
 			return cell
- 
 		}
 	}
 	
@@ -175,7 +249,7 @@ override func tableView(_ tableView: UITableView, heightForRowAt indexPath: Inde
 //		}
 //	}
 
-
+	
 }
 
 
@@ -187,8 +261,22 @@ extension MasterViewController: UICollectionViewDelegate, UICollectionViewDataSo
 		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "VoteCell",
 													  for: indexPath as IndexPath)
 		
-		cell.backgroundColor = .red
-		
+		let image:UIImageView = cell.subviews[0].subviews[0] as! UIImageView
+		let label:UILabel = cell.subviews[0].subviews[1] as! UILabel
+
+		if indexPath.row < votes.count {
+			let data:Dictionary = votes[indexPath.row]
+			
+			image.image = UIImage(named:data["file"]!)
+			label.text = data["name"]
+		}
+		else
+		{
+			image.image = UIImage(named:("vote" + String(indexPath.row + 1)))
+			label.text = ""
+
+		}
+
 		return cell
 
 	}

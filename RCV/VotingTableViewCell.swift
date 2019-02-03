@@ -10,17 +10,14 @@ import UIKit
 
 class VotingTableViewCell: UITableViewCell {
 
-	@IBOutlet private weak var collectionView: UICollectionView!
+	@IBOutlet weak var collectionView: UICollectionView!
 
+//	@IBOutlet weak var label: UILabel!
+//	@IBOutlet weak var image: UIImageView!
+//
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
 
 	
