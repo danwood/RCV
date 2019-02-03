@@ -50,6 +50,7 @@ class MasterViewController: UITableViewController, UITableViewDragDelegate, UICo
 	
 	func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
 		
+		
 		if votes.count > indexPath.row {
 			let dict = votes[indexPath.row]
 			let data:Data = NSKeyedArchiver.archivedData(withRootObject: dict)
@@ -145,7 +146,7 @@ class MasterViewController: UITableViewController, UITableViewDragDelegate, UICo
 			case 1:
 				return "Your Candidates"
 			default:
-				return "Your Vote"
+				return "Your Vote — Drag candidates below"
 		}
 	}
 	
@@ -261,24 +262,37 @@ override func tableView(_ tableView: UITableView, heightForRowAt indexPath: Inde
 
 extension MasterViewController: UICollectionViewDelegate, UICollectionViewDataSource {
 	
+	@objc func didPressCloseButton(_ sender : UIButton)
+	{
+		self.votes.remove(at: sender.tag)
+		self.collectionView?.reloadData()
+	}
 	
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+		
+		self.collectionView = collectionView		// need to stash this away at some point early
+		
 		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "VoteCell",
 													  for: indexPath as IndexPath)
 		
 		let image:UIImageView = cell.subviews[0].subviews[0] as! UIImageView
 		let label:UILabel = cell.subviews[0].subviews[1] as! UILabel
+		let closeButton:UIButton = cell.subviews[0].subviews[2] as! UIButton
 
 		if indexPath.row < votes.count {
 			let data:Dictionary = votes[indexPath.row]
 			
 			image.image = UIImage(named:data["file"]!)
 			label.text = data["name"]
+			closeButton.isHidden = false;
+			closeButton.tag = indexPath.row
+			closeButton.addTarget(self, action: Selector("didPressCloseButton:"), for: .touchUpInside)
 		}
 		else
 		{
 			image.image = UIImage(named:("vote" + String(indexPath.row + 1)))
 			label.text = ""
+			closeButton.isHidden = true;
 
 		}
 
