@@ -28,6 +28,7 @@ class VotingTableViewCell: UITableViewCell {
 		collectionView.reloadData()
 		
 		collectionView.dragDelegate = dataSourceDelegate as! UICollectionViewDragDelegate;
+		collectionView.dropDelegate = dataSourceDelegate as! UICollectionViewDropDelegate;
 		collectionView.dragInteractionEnabled = true
 
 	}
