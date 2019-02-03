@@ -17,7 +17,7 @@ class MasterViewController: UITableViewController, UITableViewDragDelegate, UICo
 	var votes // = [[String:String]]()
 = [
 	["name": "Lungren Dolphin", "file": "dolphin.png", "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut rutrum pretium erat, in mattis leo consectetur vitae. Phasellus venenatis est in tempus dignissim. Vestibulum elit elit, malesuada sed nunc vitae, ultrices tristique mi. Praesent convallis nunc leo. Phasellus quis ornare nisi. Vivamus vestibulum, elit at dignissim pharetra, ligula urna maximus quam, a sagittis diam nibh nec sem. Quisque convallis nunc quis dolor euismod ultricies. Praesent eget aliquet magna. Vestibulum posuere risus massa, quis vehicula eros scelerisque at." ],
-	["name": "Roger Rhinoceros", "file": "rhinoceros.png", "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut rutrum pretium erat, in mattis leo consectetur vitae. Phasellus venenatis est in tempus dignissim. Vestibulum elit elit, malesuada sed nunc vitae, ultrices tristique mi. Praesent convallis nunc leo. Phasellus quis ornare nisi. Vivamus vestibulum, elit at dignissim pharetra, ligula urna maximus quam, a sagittis diam nibh nec sem. Quisque convallis nunc quis dolor euismod ultricies. Praesent eget aliquet magna. Vestibulum posuere risus massa, quis vehicula eros scelerisque at." ]
+	["name": "Buto Rhinoceros", "file": "rhinoceros.png", "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut rutrum pretium erat, in mattis leo consectetur vitae. Phasellus venenatis est in tempus dignissim. Vestibulum elit elit, malesuada sed nunc vitae, ultrices tristique mi. Praesent convallis nunc leo. Phasellus quis ornare nisi. Vivamus vestibulum, elit at dignissim pharetra, ligula urna maximus quam, a sagittis diam nibh nec sem. Quisque convallis nunc quis dolor euismod ultricies. Praesent eget aliquet magna. Vestibulum posuere risus massa, quis vehicula eros scelerisque at." ]
 	]
 	
 	var objects =
@@ -26,32 +26,37 @@ class MasterViewController: UITableViewController, UITableViewDragDelegate, UICo
 			["name": "Snoop Dog", "file": "dog.png", "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut rutrum pretium erat, in mattis leo consectetur vitae. Phasellus venenatis est in tempus dignissim. Vestibulum elit elit, malesuada sed nunc vitae, ultrices tristique mi. Praesent convallis nunc leo. Phasellus quis ornare nisi. Vivamus vestibulum, elit at dignissim pharetra, ligula urna maximus quam, a sagittis diam nibh nec sem. Quisque convallis nunc quis dolor euismod ultricies. Praesent eget aliquet magna. Vestibulum posuere risus massa, quis vehicula eros scelerisque at." ],
 			["name": "Wilbur Horse", "file": "horse.png", "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut rutrum pretium erat, in mattis leo consectetur vitae. Phasellus venenatis est in tempus dignissim. Vestibulum elit elit, malesuada sed nunc vitae, ultrices tristique mi. Praesent convallis nunc leo. Phasellus quis ornare nisi. Vivamus vestibulum, elit at dignissim pharetra, ligula urna maximus quam, a sagittis diam nibh nec sem. Quisque convallis nunc quis dolor euismod ultricies. Praesent eget aliquet magna. Vestibulum posuere risus massa, quis vehicula eros scelerisque at." ],
 			["name": "Felix Cat", "file": "cat.png", "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut rutrum pretium erat, in mattis leo consectetur vitae. Phasellus venenatis est in tempus dignissim. Vestibulum elit elit, malesuada sed nunc vitae, ultrices tristique mi. Praesent convallis nunc leo. Phasellus quis ornare nisi. Vivamus vestibulum, elit at dignissim pharetra, ligula urna maximus quam, a sagittis diam nibh nec sem. Quisque convallis nunc quis dolor euismod ultricies. Praesent eget aliquet magna. Vestibulum posuere risus massa, quis vehicula eros scelerisque at." ],
-			["name": "Gary Gorilla", "file": "gorilla.png", "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut rutrum pretium erat, in mattis leo consectetur vitae. Phasellus venenatis est in tempus dignissim. Vestibulum elit elit, malesuada sed nunc vitae, ultrices tristique mi. Praesent convallis nunc leo. Phasellus quis ornare nisi. Vivamus vestibulum, elit at dignissim pharetra, ligula urna maximus quam, a sagittis diam nibh nec sem. Quisque convallis nunc quis dolor euismod ultricies. Praesent eget aliquet magna. Vestibulum posuere risus massa, quis vehicula eros scelerisque at." ],
+			["name": "Koko Gorilla", "file": "gorilla.png", "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut rutrum pretium erat, in mattis leo consectetur vitae. Phasellus venenatis est in tempus dignissim. Vestibulum elit elit, malesuada sed nunc vitae, ultrices tristique mi. Praesent convallis nunc leo. Phasellus quis ornare nisi. Vivamus vestibulum, elit at dignissim pharetra, ligula urna maximus quam, a sagittis diam nibh nec sem. Quisque convallis nunc quis dolor euismod ultricies. Praesent eget aliquet magna. Vestibulum posuere risus massa, quis vehicula eros scelerisque at." ],
 			["name": "Ratatouille", "file": "rat.png", "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut rutrum pretium erat, in mattis leo consectetur vitae. Phasellus venenatis est in tempus dignissim. Vestibulum elit elit, malesuada sed nunc vitae, ultrices tristique mi. Praesent convallis nunc leo. Phasellus quis ornare nisi. Vivamus vestibulum, elit at dignissim pharetra, ligula urna maximus quam, a sagittis diam nibh nec sem. Quisque convallis nunc quis dolor euismod ultricies. Praesent eget aliquet magna. Vestibulum posuere risus massa, quis vehicula eros scelerisque at." ],
 			["name": "Porky Pig", "file": "pig.png", "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut rutrum pretium erat, in mattis leo consectetur vitae. Phasellus venenatis est in tempus dignissim. Vestibulum elit elit, malesuada sed nunc vitae, ultrices tristique mi. Praesent convallis nunc leo. Phasellus quis ornare nisi. Vivamus vestibulum, elit at dignissim pharetra, ligula urna maximus quam, a sagittis diam nibh nec sem. Quisque convallis nunc quis dolor euismod ultricies. Praesent eget aliquet magna. Vestibulum posuere risus massa, quis vehicula eros scelerisque at." ],
 			["name": "Roger Rabbit", "file": "rabbit.png", "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut rutrum pretium erat, in mattis leo consectetur vitae. Phasellus venenatis est in tempus dignissim. Vestibulum elit elit, malesuada sed nunc vitae, ultrices tristique mi. Praesent convallis nunc leo. Phasellus quis ornare nisi. Vivamus vestibulum, elit at dignissim pharetra, ligula urna maximus quam, a sagittis diam nibh nec sem. Quisque convallis nunc quis dolor euismod ultricies. Praesent eget aliquet magna. Vestibulum posuere risus massa, quis vehicula eros scelerisque at." ],
 			["name": "Tony Tiger", "file": "tiger.png", "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut rutrum pretium erat, in mattis leo consectetur vitae. Phasellus venenatis est in tempus dignissim. Vestibulum elit elit, malesuada sed nunc vitae, ultrices tristique mi. Praesent convallis nunc leo. Phasellus quis ornare nisi. Vivamus vestibulum, elit at dignissim pharetra, ligula urna maximus quam, a sagittis diam nibh nec sem. Quisque convallis nunc quis dolor euismod ultricies. Praesent eget aliquet magna. Vestibulum posuere risus massa, quis vehicula eros scelerisque at." ],
 			["name": "Lungren Dolphin", "file": "dolphin.png", "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut rutrum pretium erat, in mattis leo consectetur vitae. Phasellus venenatis est in tempus dignissim. Vestibulum elit elit, malesuada sed nunc vitae, ultrices tristique mi. Praesent convallis nunc leo. Phasellus quis ornare nisi. Vivamus vestibulum, elit at dignissim pharetra, ligula urna maximus quam, a sagittis diam nibh nec sem. Quisque convallis nunc quis dolor euismod ultricies. Praesent eget aliquet magna. Vestibulum posuere risus massa, quis vehicula eros scelerisque at." ],
-			["name": "Roger Rhinoceros", "file": "rhinoceros.png", "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut rutrum pretium erat, in mattis leo consectetur vitae. Phasellus venenatis est in tempus dignissim. Vestibulum elit elit, malesuada sed nunc vitae, ultrices tristique mi. Praesent convallis nunc leo. Phasellus quis ornare nisi. Vivamus vestibulum, elit at dignissim pharetra, ligula urna maximus quam, a sagittis diam nibh nec sem. Quisque convallis nunc quis dolor euismod ultricies. Praesent eget aliquet magna. Vestibulum posuere risus massa, quis vehicula eros scelerisque at." ]
+			["name": "Buto Rhinoceros", "file": "rhinoceros.png", "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut rutrum pretium erat, in mattis leo consectetur vitae. Phasellus venenatis est in tempus dignissim. Vestibulum elit elit, malesuada sed nunc vitae, ultrices tristique mi. Praesent convallis nunc leo. Phasellus quis ornare nisi. Vivamus vestibulum, elit at dignissim pharetra, ligula urna maximus quam, a sagittis diam nibh nec sem. Quisque convallis nunc quis dolor euismod ultricies. Praesent eget aliquet magna. Vestibulum posuere risus massa, quis vehicula eros scelerisque at." ]
 	]
 
 	// DRAG OUT OF TABLE VIEW …
 	
 	func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
-		
-		let dict = objects[indexPath.row]
-		let data:Data = NSKeyedArchiver.archivedData(withRootObject: dict)
-		let itemProvider = NSItemProvider(item: data as NSData, typeIdentifier: "???")
-		return [UIDragItem(itemProvider: itemProvider)]
+
+		if indexPath.section == 1 {
+			let dict = objects[indexPath.row]
+			let data:Data = NSKeyedArchiver.archivedData(withRootObject: dict)
+			let itemProvider = NSItemProvider(item: data as NSData, typeIdentifier: "???")
+			return [UIDragItem(itemProvider: itemProvider)]
+		}
+		return []
 	}
 	
 	func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
 		
-		let dict = objects[indexPath.row]
-		let data:Data = NSKeyedArchiver.archivedData(withRootObject: dict)
-		let itemProvider = NSItemProvider(item: data as NSData, typeIdentifier: "???")
-		return [UIDragItem(itemProvider: itemProvider)]
-
+		if votes.count > indexPath.row {
+			let dict = votes[indexPath.row]
+			let data:Data = NSKeyedArchiver.archivedData(withRootObject: dict)
+			let itemProvider = NSItemProvider(item: data as NSData, typeIdentifier: "???")
+			return [UIDragItem(itemProvider: itemProvider)]
+		}
+		return []
 	}
 
 	// DROP INTO COLLECTION VIEW …
@@ -104,8 +109,8 @@ class MasterViewController: UITableViewController, UITableViewDragDelegate, UICo
 		    detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
 		}
 	
-		tableView.dragDelegate = self;
-		tableView.dragInteractionEnabled = true
+		 tableView.dragDelegate = self;
+		 tableView.dragInteractionEnabled = true
 
 	}
 
