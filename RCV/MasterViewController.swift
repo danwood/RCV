@@ -469,7 +469,7 @@ class MasterViewController: UITableViewController, UITableViewDragDelegate, UITa
 			let cell = tableView.dequeueReusableCell(withIdentifier: "SliderCell", for: indexPath)
 			
 			voteSlider = cell.subviews[0].subviews[0] as! SliderControl
-			voteSlider!.isEnabled = false
+			// voteSlider!.isEnabled = false
 			return cell
 			
 
@@ -516,7 +516,7 @@ extension MasterViewController: UICollectionViewDelegate, UICollectionViewDataSo
 		if indexPath.row < votes.count {
 			let data:Dictionary = votes[indexPath.row]
 			
-			voteSlider!.isEnabled = true	// there is a vote, so enable slider
+			//voteSlider!.isEnabled = true	// there is a vote, so enable slider
 
 			image.image = UIImage(named:data["file"]!)
 			label.text = data["name"]

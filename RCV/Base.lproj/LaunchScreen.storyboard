@@ -36,8 +36,8 @@
                                     <constraint firstAttribute="height" constant="81" id="vLG-8Z-IQX"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Ranked-choice style!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="opc-55-jRm">
-                                <rect key="frame" x="80" y="259" width="161" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ranked-choice style!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="opc-55-jRm">
+                                <rect key="frame" x="27" y="259" width="266" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -45,16 +45,16 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="2gw-kE-oGt" firstAttribute="top" secondItem="opc-55-jRm" secondAttribute="bottom" constant="99" id="083-Je-KvS"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="As1-dB-Dny" secondAttribute="trailing" constant="34" id="3NX-JD-Fnq"/>
                             <constraint firstAttribute="bottom" secondItem="As1-dB-Dny" secondAttribute="bottom" constant="79" id="7Ev-lw-rNd"/>
+                            <constraint firstItem="2gw-kE-oGt" firstAttribute="top" secondItem="opc-55-jRm" secondAttribute="bottom" constant="99" id="ErY-dP-MCP"/>
+                            <constraint firstItem="opc-55-jRm" firstAttribute="top" secondItem="g2p-ob-3Od" secondAttribute="bottom" constant="8" symbolic="YES" id="G9z-Gy-Hal"/>
                             <constraint firstItem="g2p-ob-3Od" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="Lib-az-XV2"/>
                             <constraint firstItem="As1-dB-Dny" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="46" id="MNm-1e-gVF"/>
-                            <constraint firstItem="opc-55-jRm" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="80" id="OdL-Nh-ie0"/>
-                            <constraint firstItem="opc-55-jRm" firstAttribute="top" secondItem="g2p-ob-3Od" secondAttribute="bottom" constant="8" id="RnK-Oy-qDk"/>
-                            <constraint firstItem="opc-55-jRm" firstAttribute="centerX" secondItem="g2p-ob-3Od" secondAttribute="centerX" id="WCZ-Iu-78I"/>
+                            <constraint firstItem="opc-55-jRm" firstAttribute="centerX" secondItem="2gw-kE-oGt" secondAttribute="centerX" id="Wx8-Um-n9f"/>
                             <constraint firstItem="g2p-ob-3Od" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="135" id="bk0-oC-PtX"/>
-                            <constraint firstItem="2gw-kE-oGt" firstAttribute="centerX" secondItem="opc-55-jRm" secondAttribute="centerX" id="nKU-V4-HN8"/>
+                            <constraint firstItem="opc-55-jRm" firstAttribute="centerX" secondItem="g2p-ob-3Od" secondAttribute="centerX" id="cOc-Xf-eB2"/>
+                            <constraint firstItem="opc-55-jRm" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="27" id="dAl-lB-U3p"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
