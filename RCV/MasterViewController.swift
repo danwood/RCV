@@ -11,7 +11,7 @@ import UIKit
 
 class MasterViewController: UITableViewController, UITableViewDragDelegate, UITableViewDropDelegate, UICollectionViewDragDelegate, UICollectionViewDropDelegate {
 
-	@IBOutlet weak var topSlider: SliderControl!
+	@IBOutlet weak var voteSlider: SliderControl!
 
 	var collectionView : UICollectionView? = nil
 
@@ -467,6 +467,9 @@ class MasterViewController: UITableViewController, UITableViewDragDelegate, UITa
 		
 		case 1:
 			let cell = tableView.dequeueReusableCell(withIdentifier: "SliderCell", for: indexPath)
+			
+			voteSlider = cell.subviews[0].subviews[0] as! SliderControl
+			voteSlider!.isEnabled = false
 			return cell
 			
 
@@ -513,6 +516,8 @@ extension MasterViewController: UICollectionViewDelegate, UICollectionViewDataSo
 		if indexPath.row < votes.count {
 			let data:Dictionary = votes[indexPath.row]
 			
+			voteSlider!.isEnabled = true	// there is a vote, so enable slider
+
 			image.image = UIImage(named:data["file"]!)
 			label.text = data["name"]
 			closeButton.isHidden = true;			// false --- do I want this at all?
