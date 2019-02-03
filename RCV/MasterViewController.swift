@@ -17,13 +17,13 @@ class MasterViewController: UITableViewController, UITableViewDragDelegate, UITa
 
 	var detailViewController: DetailViewController? = nil
 	
-	var votes //= [[String:String]]()
-	=
-		[
-			["name": "Ratatouille", "file": "rat.png", "bio": "" ],
-			["name": "Porky Pig", "file": "pig.png", "bio": "" ],
-			["name": "Snoop Dog", "file": "dog.png", "bio": "" ],
-			]
+	var votes = [[String:String]]()
+//	=
+//		[
+//			["name": "Ratatouille", "file": "rat.png", "bio": "" ],
+//			["name": "Porky Pig", "file": "pig.png", "bio": "" ],
+//			["name": "Snoop Dog", "file": "dog.png", "bio": "" ],
+//			]
 	
 	var objects =
 	
@@ -217,7 +217,7 @@ class MasterViewController: UITableViewController, UITableViewDragDelegate, UITa
 				}
 			
 			}
-			else if item.sourceIndexPath?.section == 2
+			else // if item.sourceIndexPath?.section == 2
 			{
 				// from CANDIDATES into VOTES - insert, possibly lop off the end to keep at 3
 				if destRow > votes.count {
