@@ -33,20 +33,24 @@ class MasterViewController: UITableViewController, UITableViewDragDelegate, UITa
 			["name": "Snoop Dog", "file": "dog.png", "bio": "" ],
 			["name": "Koko Gorilla", "file": "gorilla.png", "bio": "" ],
 			["name": "Wilbur Horse", "file": "horse.png", "bio": "" ],
+			["name": "Porky Pig", "file": "pig.png", "bio": "" ],
 			["name": "Roger Rabbit", "file": "rabbit.png", "bio": "" ],
+			["name": "Ratatouille", "file": "rat.png", "bio": "" ],
 			["name": "Tony Tiger", "file": "tiger.png", "bio": "" ],
-	]
+		]
 
 
 	func indexOfName(_ name:String) -> Int {
 		
 		var i = 0
 		for object in objects {
-			if name == object["name"] {
+			let thisName = object["name"]!
+			if name == thisName {
 				return i
 			}
 			i += 1
 		}
+		print ("Cannot find " + name)
 		return -1
 	}
 	
@@ -69,42 +73,61 @@ class MasterViewController: UITableViewController, UITableViewDragDelegate, UITa
 			
 		}
 		
-		let jsonData = try? JSONSerialization.data(withJSONObject: dictForJson, options: .prettyPrinted)
-		print(String(data:jsonData!, encoding:.utf8))
+
+		
+		do {
+			let jsonData = try JSONSerialization.data(withJSONObject: dictForJson, options: .prettyPrinted)
+			//print(String(data:jsonData, encoding:.utf8))
+
+			// create post request
+			let url = URL(string: "https://rankchoice.herokuapp.com/votes")!
+			var request = URLRequest(url: url)
+			request.httpMethod = "POST"
 			
-		// post to https://rankchoice.herokuapp.com/votes
-		
-		// create post request
-		let url = URL(string: "https://rankchoice.herokuapp.com/votes")!
-		var request = URLRequest(url: url)
-		request.httpMethod = "POST"
-		
-		// insert json data to the request
-		request.httpBody = jsonData
-		
-		let task = URLSession.shared.dataTask(with: request) { data, response, error in
-			guard let data = data, error == nil else {
-				print(error?.localizedDescription ?? "No data")
+			// insert json data to the request
+			request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
+			request.setValue("application/json", forHTTPHeaderField: "Accept")
+			request.httpBody = jsonData
+			
+			
+			let task = URLSession.shared.dataTask(with: request){ responseData, response, error in
+				if error != nil{
+
+					DispatchQueue.main.async {
+
+						let alert = UIAlertController(title: "Error", message: "No data from submission.", preferredStyle: .alert)
+						alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+						self.present(alert, animated: true)
+					}
+					return
+				}
 				
-				let alert = UIAlertController(title: "Error", message: "No data from submission.", preferredStyle: .alert)
-				alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-				self.present(alert, animated: true)
-				
-				return
+				do {
+					print(String(data:responseData!, encoding:.utf8))
+					let result = try JSONSerialization.jsonObject(with: responseData!, options: []) as? [String:AnyObject]
+					
+					DispatchQueue.main.async {
+
+						let alert = UIAlertController(title: "Success", message: "Vote was tallied", preferredStyle: .alert)
+						alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+						self.present(alert, animated: true)
+					}
+				} catch {
+
+					DispatchQueue.main.async {
+
+						let alert = UIAlertController(title: "Error", message: "Response received but couldn't decode JSON.", preferredStyle: .alert)
+						alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+						self.present(alert, animated: true)
+					}
+				}
 			}
-			let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
-			if let responseJSON = responseJSON as? [String: Any] {
-				print(responseJSON)
-
-				let alert = UIAlertController(title: "Success", message: "responseJSON", preferredStyle: .alert)
-				alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-				self.present(alert, animated: true)
-
-
-			}
+			
+			task.resume()
+		} catch {
+			print(error)
 		}
-		
-		task.resume()
+
 
 	}
 
